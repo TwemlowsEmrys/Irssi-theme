@@ -1,0 +1,243 @@
+#  _____              _   _______ _                         
+# |_   _|            (_) |__   __| |                        
+#   | |  _ __ ___ ___ _     | |  | |__   ___ _ __ ___   ___ 
+#   | | | '__/ __/ __| |    | |  | '_ \ / _ \ '_ ` _ \ / _ \
+#  _| |_| |  \__ \__ \ |    | |  | | | |  __/ | | | | |  __/
+# |_____|_|  |___/___/_|    |_|  |_| |_|\___|_| |_| |_|\___|
+                                                           
+# Created By TwemlowsEmrys (Tw3ml0w5_3mry5)
+                                                         
+# these characters are automatically replaced with specified color
+# (dark grey by default)
+replaces = { "[]:()" = "%K$*%n"; };
+
+abstracts = {
+
+  ##
+  ## generic
+  ##
+
+  # text to insert at the beginning of each non-message line
+  line_start = "%R=%W=%R= %N";
+
+  # timestamp styling, nothing by default
+  timestamp = "[$*]";
+
+  # any kind of text that needs hilighting, default is to bold
+  hilight = "%W$*%n";
+
+  # any kind of error message, default is bright red
+  error = "%r$*%n";
+
+  # channel name is printed
+  channel = "$*";
+
+  # nick is printed
+  nick = "%W$*%n";
+
+  # nick host is printed
+  nickhost = "$*";
+
+  # server name is printed
+  server = "%W$*%n";
+
+  # some kind of comment is printed
+  comment = "[$*]";
+
+  # reason for something is printed (part, quit, kick, ..)
+  reason = "(%n$*)";
+
+  # mode change is printed ([+o nick])
+  mode = "[%W$*%n]";
+
+  ##
+  ## channel specific messages
+  ##
+
+  # highlighted nick/host is printed (joins)
+  channick_hilight = "$0-%n";
+  chanhost_hilight = "[%r{nickhost $*}%n]";
+
+  # nick/host is printed (parts, quits, etc.)
+  channick = "%R$0-%n";
+  chanhost = "[%r{nickhost $*}%n]";
+
+  # highlighted channel name is printed
+  channelhilight = "%r$*%n";
+
+  # ban/ban exception/invite list mask is printed
+  ban = "$*";
+
+  ##
+  ## messages
+  ##
+
+  # Extracolors start here
+  magenta = "%M<%n%W$0%n$1-%M>%n %|";
+  blue = "%B<%n%W$0%n$1-%B>%n %|";
+  # Extracolors end here
+
+  # the basic styling of how to print message, $0 = nick mode, $1 = nick
+  msgnick = "{blue $0$1-}";
+
+  # message from you is printed. "msgownnick" specifies the styling of the
+  # nick ($0 part in msgnick) and "ownmsgnick" specifies the styling of the
+  # whole line.
+
+  # Example1: You want the message text to be green:
+  #  ownmsgnick = "{msgnick $0 $1-}%g";
+  # Example2.1: You want < and > chars to be yellow:
+  #  ownmsgnick = "%r{msgnick $0 $1-%r}%n";
+  #  (you'll also have to remove <> from replaces list above)
+  # Example2.2: But you still want to keep <> grey for other messages:
+  #  pubmsgnick = "%K{msgnick $0 $1-%K}%n";
+  #  pubmsgmenick = "%K{msgnick $0 $1-%K}%n";
+  #  pubmsghinick = "%K{msgnick $1 $0$2-%K}%n";
+  #  ownprivmsgnick = "%K{msgnick  $0-%K}%n";
+  #  privmsgnick = "%K{msgnick  %R$0-%K}%n";
+
+  # $0 = nick mode, $1 = nick
+  ownmsgnick = "{magenta $0$1-}";
+  ownnick = "%N$*";
+
+  # public message in channel, $0 = nick mode, $1 = nick
+  pubmsgnick = "{blue $0$1-}";
+  pubnick = "%N$*";
+
+  # public message in channel meant for me, $0 = nick mode, $1 = nick
+  pubmsgmenick = "{blue $0$1-}";
+  menick = "%r$0%n";
+
+  # public highlighted message in channel
+  # $0 = highlight color, $1 = nick mode, $2 = nick
+  pubmsghinick = "{blue $1$0$2-}";
+
+  # channel name is printed with message
+  msgchannel = ":%W$*%n";
+
+  # private message, $0 = nick, $1 = host
+  privmsg = "[%P$0%n(%p{nickhost $1-}%n)] ";
+
+  # private message from you, $0 = "msg", $1 = target nick
+  ownprivmsg = "[%rmsg%n(%R$1-%n)] ";
+
+  # own private message in query
+  ownprivmsgnick = "{magenta %N$*}";
+  ownprivnick = "%n$*";
+
+  # private message in query
+  privmsgnick = "{blue %N$*}";
+
+  ##
+  ## Actions (/ME stuff)
+  ##
+
+  # used internally by this theme
+  action_core = "%K*%n";
+
+  # generic one that's used by most actions
+  action = "{action_core $0-} ";
+
+  # own action, both private/public
+  ownaction = "{action_core } %W$0%n %n$1-";
+
+  # own action with target, both private/public
+  ownaction_target = "{action_core } -> %W$0%n%w/%n%r$1%n ";
+
+  # private action sent by others
+  pvtaction = "{action }%r$0%n$1- ";
+  pvtaction_query = "{action }%r$*%n ";
+
+  # public action sent by others
+  pubaction = "{action }%r$*%n ";
+
+  ##
+  ## statusbar
+  ##
+
+  # default background for all statusbars. You can also give
+  # the default foreground color for statusbar items.
+  sb_background = "%0%W";
+
+  # default backround for "default" statusbar group
+  #sb_default_bg = "%4";
+  # background for prompt / input line
+  sb_prompt_bg = "%R";
+  # background for info statusbar
+  sb_info_bg = "%8";
+  # background for topicbar (same default)
+  sb_topic_bg = "%0%W";
+
+  # text at the beginning of statusbars. sb-item already puts
+  # space there,so we don't use anything by default.
+  sbstart = "%W[%W%R========%n%W]%n";
+  # text at the end of statusbars. Use space so that it's never
+  # used for anything.
+  sbend = "%W[%W%R========%n%W]%n";
+
+  topicsbstart = "%W[%W%R========%n%W]%n%RTOPIC:{sbstart $*}";
+  topicsbend = "%W[%W%R========%n%W]%n{sbend $*}";
+
+  prompt = "[$*] ";
+
+  sb = " %W[%n$*%W]%n";
+  sbmode = "(%W+%n$*)";
+  sbaway = " (%GzZzZ%n)";
+  sbservertag = "%W:%n$0 (change with ^X)";
+  sbnickmode = "$0";
+
+  ##
+  ## other IRC events
+  ##
+
+  # notices
+  ownnotice = "[%rnotice%n(%R$1-%n)] ";
+  notice = "%K-%n%P$0%n%K-%n ";
+  pubnotice_channel = ":$*";
+  pvtnotice_host = "(%m$*%n)";
+  servernotice = "{notice $*}";
+
+  # CTCPs
+  ownctcp = "[%r$0%n(%R$1-%n)] ";
+  ctcp = "%K>%n>%W>%n $0 %g$1%_%n $2 %g$3%n %g%_$4%n %g$5%n %g%_$6%n%_";
+
+  # wallops
+  wallop = "$*: ";
+  wallop_nick = "$*";
+  wallop_action = " * $* ";
+
+  # netsplits
+  netsplit = "$*";
+  netjoin = "$*";
+
+  # /names list
+  names_prefix = "     %w:%n ";
+  names_nick = "%r$0%n%w$1%n  ";
+  names_nick_op = "{names_nick $*}";
+  names_nick_halfop = "{names_nick $*}";
+  names_nick_voice = "{names_nick $*}";
+  #names_users = "%w$*%n";
+  names_users = "%w$0: $1%n";
+  names_channel = "$*";
+
+  # DCC
+  dcc = "{line_start}%R$0%n %n$1-";
+  dccfile = "%_$*%_";
+
+  # DCC chat, own msg/action
+  dccownmsg = "[%rdcc%n(%R$1-%n)] ";
+  dccownnick = "$*";
+  dccownaction = "{action_core } %W$0%n$1 ";
+  dccownaction_target = "{action_core $0}%K:%r$1%n ";
+
+  # DCC chat, others
+  dccmsg = "[%G$1-%n(%gdcc%n)] ";
+  dccquerynick = "$*";
+  dccaction = "{action_core } %r$0%n %|";
+};
+formats = {
+  "fe-common/core" = {
+    quit = "Signoff {channick $0}: {channel $3} {reason $2}";
+    own_msg = "{ownmsgnick $2 {ownnick $[0]0}}$1";
+  };
+};
